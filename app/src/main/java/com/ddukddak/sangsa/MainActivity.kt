@@ -15,6 +15,8 @@ import androidx.core.app.NotificationManagerCompat
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    var initalStatus: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,6 +42,12 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                if (!initalStatus) {
+                    initalStatus= !initalStatus
+                    return
+                }  // 어플 최초 실행시 자동으로 선택된 스피너에 대한 알림 주지 않기 위해서
+
                 when (position) {
                     0 -> {
                         Toast.makeText(this@MainActivity, "You have chosen number 1", Toast.LENGTH_LONG).show()
