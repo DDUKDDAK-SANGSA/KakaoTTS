@@ -4,22 +4,35 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
+import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 class MainActivity : AppCompatActivity() {
     var initalStatus: Boolean = false
+    val NETWORK_STATE_CODE = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Log.e("hash key",getSigneture(this));
+
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), NETWORK_STATE_CODE)
 
         if (!permissionGranted()) {
             var intent: Intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
@@ -61,6 +74,20 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(notificationReceiver, IntentFilter("Msg"))
     }
 
+    /*
+    override fun onPause() {
+        super.onPause()
+        try {
+            unregisterReceiver(notificationReceiver)
+        }
+        catch(i : IllegalArgumentException) {
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(notificationReceiver)
+    }*/
     val notificationReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
@@ -71,11 +98,41 @@ class MainActivity : AppCompatActivity() {
 
             var fullText: String = appName + title + text + subText
             showText.append(fullText + "\n")
+
+            if(!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
+                val TTSIntent = Intent(context, TextToSpeech::class.java)
+                TTSIntent.putExtra("TextForSpeech", text)
+                startService(TTSIntent)
+            }
         }
     }
 
     fun permissionGranted(): Boolean {
         var sets: Set<String>? = NotificationManagerCompat.getEnabledListenerPackages(this)
         return sets != null && sets.contains(packageName)
+    }
+
+    //to get hash key
+    fun getSigneture(context: Context): String? {
+        val pm: PackageManager = context.getPackageManager()
+        try {
+            val packageInfo: PackageInfo =
+                pm.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES)
+            for (i in packageInfo.signatures.indices) {
+                val signature: android.content.pm.Signature? = packageInfo.signatures[i]
+                try {
+                    val md: MessageDigest = MessageDigest.getInstance("SHA")
+                    if (signature != null) {
+                        md.update(signature.toByteArray())
+                    }
+                    return Base64.encodeToString(md.digest(), Base64.NO_WRAP)
+                } catch (e: NoSuchAlgorithmException) {
+                    e.printStackTrace()
+                }
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return null
     }
 }
