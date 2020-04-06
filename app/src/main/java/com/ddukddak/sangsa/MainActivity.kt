@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.e("hash key",getSigneture(this));
+        Log.e("hash key",getSignature(this));
 
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), NETWORK_STATE_CODE)
 
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //to get hash key
-    fun getSigneture(context: Context): String? {
+    fun getSignature(context: Context): String? {
         val pm: PackageManager = context.getPackageManager()
         try {
             val packageInfo: PackageInfo =
