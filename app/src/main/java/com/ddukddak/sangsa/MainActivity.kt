@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.e("hash key",getSigneture(this));
+        Log.d("hash key",getSigneture(this));
 
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), NETWORK_STATE_CODE)
 
@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity() {
         showText.movementMethod = ScrollingMovementMethod() //스크롤바 달기
 
         val adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.speed,
-                android.R.layout.simple_spinner_item
+            this,
+            R.array.speed,
+            android.R.layout.simple_spinner_item
         ) // 안 변하니까 val 선언함
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -74,20 +74,6 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(notificationReceiver, IntentFilter("Msg"))
     }
 
-    /*
-    override fun onPause() {
-        super.onPause()
-        try {
-            unregisterReceiver(notificationReceiver)
-        }
-        catch(i : IllegalArgumentException) {
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(notificationReceiver)
-    }*/
     val notificationReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
@@ -100,9 +86,13 @@ class MainActivity : AppCompatActivity() {
             showText.append(fullText + "\n")
 
             if(!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
+                val FilterIntent = Intent(context, BadwordFilter::class.java)
+                FilterIntent.putExtra("TextToFilter", text)
+                startService(FilterIntent)
+/*
                 val TTSIntent = Intent(context, TextToSpeech::class.java)
                 TTSIntent.putExtra("TextForSpeech", text)
-                startService(TTSIntent)
+                startService(TTSIntent)*/
             }
         }
     }

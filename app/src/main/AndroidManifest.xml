@@ -34,6 +34,11 @@
             </intent-filter>
         </service>
         <service android:name=".TextToSpeech">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW"/>
+        </intent-filter>
+        </service>
+        <service android:name=".BadwordFilter">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>

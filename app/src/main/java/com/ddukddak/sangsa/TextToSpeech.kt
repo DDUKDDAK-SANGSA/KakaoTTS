@@ -22,7 +22,6 @@ class TextToSpeech : Service() {
         super.onStart(intent, startId)
         Log.d(TAG, "onStart")
         startSpeech(intent)
-
     }
 
     private fun startSpeech(intent: Intent?) {
