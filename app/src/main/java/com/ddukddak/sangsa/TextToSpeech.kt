@@ -16,7 +16,6 @@ import com.kakao.sdk.newtoneapi.*
 class TextToSpeech : Service() {
     val TAG = "Kakao"
     var ttsClient : TextToSpeechClient? = null
-    val NETWORK_STATE_CODE = 0
 
     override fun onStart(intent: Intent?, startId: Int) {
         super.onStart(intent, startId)

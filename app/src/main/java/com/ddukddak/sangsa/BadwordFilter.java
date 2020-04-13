@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -29,7 +30,7 @@ public class BadwordFilter extends Service {
         super.onStart(intent, id);
         Log.d(TAG, "onStart");
         readData();
-        Log.d(TAG, "intent ; " + intent.getStringExtra("TextToFilter"));
+        Log.d(TAG, "text : " + intent.getStringExtra("TextToFilter"));
         filterBadWords(intent.getStringExtra("TextToFilter"));
     }
 
@@ -89,14 +90,15 @@ public class BadwordFilter extends Service {
         String text = "";
         j = 0;
         while(j != strSplit.length) {
-            Log.d("print strFiltered", strSplit[j]);
-            text.concat(strSplit[j]);
+            text += strSplit[j] + " ";
+                //text.concat(strSplit[j]);
             j++;
         }
         //      Log.d("filtered list", list.get(i));
         //    Log.d("filtered word", strSplit[j]);
         //if(!word.equals(list.get(i)))
 
+        Log.d(TAG, "filtered text : " + text);
         Intent TTSIntent = new Intent(this, TextToSpeech.class);
         TTSIntent.putExtra("TextForSpeech", text);
         startService(TTSIntent);
