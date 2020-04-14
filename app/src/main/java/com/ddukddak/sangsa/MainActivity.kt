@@ -9,6 +9,8 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Base64
 import android.util.Log
 import android.view.View
@@ -18,7 +20,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.isVisible
 import com.github.angads25.toggle.widget.LabeledSwitch
+import com.skydoves.expandablelayout.expandableLayout
 import kotlinx.android.synthetic.main.activitiy_main_2.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.security.MessageDigest
@@ -34,24 +38,42 @@ class MainActivity : AppCompatActivity() {
 
         expandable.parentLayout.setOnClickListener {
             if (expandable.isExpanded) {
+                TransitionManager.beginDelayedTransition(expandable1, AutoTransition())
+                TransitionManager.beginDelayedTransition(expandable2, AutoTransition())
+                expandable1.visibility = View.VISIBLE
+                expandable2.visibility = View.VISIBLE
                 expandable.collapse()
             } else {
+                expandable1.visibility = View.GONE
+                expandable2.visibility = View.GONE
                 expandable.expand()
             }
         }
 
         expandable1.parentLayout.setOnClickListener {
             if (expandable1.isExpanded) {
+                TransitionManager.beginDelayedTransition(expandable, AutoTransition())
+                TransitionManager.beginDelayedTransition(expandable2, AutoTransition())
+                expandable.visibility = View.VISIBLE
+                expandable2.visibility = View.VISIBLE
                 expandable1.collapse()
             } else {
+                expandable.visibility = View.GONE
+                expandable2.visibility = View.GONE
                 expandable1.expand()
             }
         }
 
         expandable2.parentLayout.setOnClickListener {
             if (expandable2.isExpanded) {
+                TransitionManager.beginDelayedTransition(expandable, AutoTransition())
+                TransitionManager.beginDelayedTransition(expandable1, AutoTransition())
+                expandable.visibility = View.VISIBLE
+                expandable1.visibility = View.VISIBLE
                 expandable2.collapse()
             } else {
+                expandable.visibility = View.GONE
+                expandable1.visibility = View.GONE
                 expandable2.expand()
             }
         }

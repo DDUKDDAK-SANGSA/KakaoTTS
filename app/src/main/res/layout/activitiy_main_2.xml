@@ -6,9 +6,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:clipChildren="false"
-        android:background="@color/colorAccent">
+            android:clipChildren="false">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorAccent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:fontFamily="@font/font_impact"
-            android:textColor="#403939"
+            android:textColor="#201D1D"
             android:text="Hear Here"
             android:textSize="40sp" />
 
@@ -41,12 +45,11 @@
             app:colorOn="@color/colorExtra1"
             app:on="false"
             app:colorBorder="@color/colorExtra1"/>
-
-    <ScrollView
+</LinearLayout>
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/ScrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:isScrollContainer="true">
+        android:layout_height="match_parent">
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -94,5 +97,5 @@
     <View style="@style/Divider"/>
 
 </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

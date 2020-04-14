@@ -39,4 +39,5 @@ dependencies {
     implementation "com.github.skydoves:expandablelayout:1.0.5"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     implementation 'com.github.angads25:toggle:1.1.0'
+
 }
