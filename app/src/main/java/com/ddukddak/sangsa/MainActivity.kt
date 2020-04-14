@@ -18,6 +18,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
+import com.github.angads25.toggle.widget.LabeledSwitch
+import kotlinx.android.synthetic.main.activitiy_main_2.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -26,6 +28,37 @@ class MainActivity : AppCompatActivity() {
     var initalStatus: Boolean = false
     val NETWORK_STATE_CODE = 0
 
+    override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activitiy_main_2)
+
+        expandable.parentLayout.setOnClickListener {
+            if (expandable.isExpanded) {
+                expandable.collapse()
+            } else {
+                expandable.expand()
+            }
+        }
+
+        expandable1.parentLayout.setOnClickListener {
+            if (expandable1.isExpanded) {
+                expandable1.collapse()
+            } else {
+                expandable1.expand()
+            }
+        }
+
+        expandable2.parentLayout.setOnClickListener {
+            if (expandable2.isExpanded) {
+                expandable2.collapse()
+            } else {
+                expandable2.expand()
+            }
+        }
+
+
+    }
+    /*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -141,4 +174,6 @@ class MainActivity : AppCompatActivity() {
         }
         return null
     }
+    */
+
 }

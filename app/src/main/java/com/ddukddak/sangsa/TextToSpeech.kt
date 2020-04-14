@@ -1,14 +1,10 @@
 package com.ddukddak.sangsa
 
-import android.R
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
-import android.widget.TextView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.kakao.sdk.newtoneapi.*
 
