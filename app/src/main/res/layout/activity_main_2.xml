@@ -65,7 +65,7 @@
             app:expandable_duration="300"
             app:expandable_isExpanded="false"
             app:expandable_parentLayout="@layout/inner_first_parent"
-            app:expandable_secondLayout="@layout/activity_loading"
+            app:expandable_secondLayout="@layout/inner_first_child"
             app:expandable_spinner_color="@color/colorPrimaryDark"
             app:expandable_spinner_size="50dp"
             app:expandable_spinner="@drawable/ic_expand_more"/>
@@ -78,7 +78,7 @@
         app:expandable_duration="200"
         app:expandable_isExpanded="false"
         app:expandable_parentLayout="@layout/inner_second_parent"
-        app:expandable_secondLayout="@layout/activity_loading"
+        app:expandable_secondLayout="@layout/inner_second_child"
         app:expandable_spinner_color="@color/colorPrimaryDark"
         app:expandable_spinner_size="50dp"
         app:expandable_spinner="@drawable/ic_expand_more"/>
@@ -90,7 +90,7 @@
         app:expandable_duration="200"
         app:expandable_isExpanded="false"
         app:expandable_parentLayout="@layout/inner_third_parent"
-        app:expandable_secondLayout="@layout/activity_loading"
+        app:expandable_secondLayout="@layout/inner_third_child"
         app:expandable_spinner_color="@color/colorPrimaryDark"
         app:expandable_spinner_size="50dp"
         app:expandable_spinner="@drawable/ic_expand_more"/>

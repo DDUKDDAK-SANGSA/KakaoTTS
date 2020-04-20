@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/inner_class_round_corner">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/font_octninesecond"
+            android:text="발신자"
+            android:textColor="#000000"
+            android:textSize="40dp" />
+
+        <Switch
+            android:id="@+id/useFunction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="250dp"
+            android:thumb="@drawable/switch_thumb"
+            android:track="@drawable/switch_track_selector" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/font_octninesecond"
+            android:text="발신 시간"
+            android:textColor="#000000"
+            android:textSize="40dp" />
+
+        <Switch
+            android:id="@+id/useFunction2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="250dp"
+            android:thumb="@drawable/switch_thumb"
+            android:track="@drawable/switch_track_selector" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/font_octninesecond"
+            android:text="현재 상태"
+            android:textColor="#000000"
+            android:textSize="40dp" />
+
+        <Switch
+            android:id="@+id/useFunction3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="15dp"
+            android:thumb="@drawable/switch_thumb"
+            android:track="@drawable/switch_track_selector" />
+    </LinearLayout>
+</LinearLayout>
