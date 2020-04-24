@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.skydoves:expandablelayout:1.0.5@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/00dd2d212ab83f9beab030ed3bb14b89/jetified-expandablelayout-1.0.5/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/00dd2d212ab83f9beab030ed3bb14b89/jetified-expandablelayout-1.0.5/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.skydoves/expandablelayout/1.0.5/2a31341ce561655bc41850ace98ebfbc4a47d6cf/expandablelayout-1.0.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.skydoves/expandablelayout/1.0.5/7d2e57c410dc99173f4e390ab5054ea8a5204909/expandablelayout-1.0.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
