@@ -32,6 +32,20 @@
                 android:layout_height="match_parent"
                 android:src="@mipmap/ic_launcher_foreground" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|right|top"
+                android:paddingRight="@dimen/com_kakao_padding"
+                android:paddingTop="@dimen/com_kakao_padding">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="102dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/kakao_lg"/>
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <com.github.angads25.toggle.widget.LabeledSwitch
@@ -69,7 +83,7 @@
                 app:expandable_secondLayout="@layout/inner_first_child"
                 app:expandable_spinner="@drawable/ic_expand_more"
                 app:expandable_spinner_color="@color/colorPrimaryDark"
-                app:expandable_spinner_size="50dp" />
+                app:expandable_spinner_size="40dp" />
 
             <View style="@style/Divider" />
 
@@ -84,7 +98,7 @@
                 app:expandable_secondLayout="@layout/inner_second_child"
                 app:expandable_spinner="@drawable/ic_expand_more"
                 app:expandable_spinner_color="@color/colorPrimaryDark"
-                app:expandable_spinner_size="50dp" />
+                app:expandable_spinner_size="40dp" />
 
             <View style="@style/Divider" />
 
@@ -98,20 +112,11 @@
                 app:expandable_secondLayout="@layout/inner_third_child"
                 app:expandable_spinner="@drawable/ic_expand_more"
                 app:expandable_spinner_color="@color/colorPrimaryDark"
-                app:expandable_spinner_size="50dp" />
+                app:expandable_spinner_size="40dp" />
 
             <View style="@style/Divider" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="right"
-        android:src="@drawable/kakao_lg"/>
-
 
 </LinearLayout>

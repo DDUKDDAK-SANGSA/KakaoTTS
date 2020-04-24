@@ -4,7 +4,7 @@
     android:id="@+id/layout_cover"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
+    android:padding="10dp"
     tools:ignore="UnusedAttribute">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:text="사운드 설정"
         android:layout_marginLeft="10dp"
-        android:textSize="45sp"
+        android:textSize="40dp"
         android:textColor="@color/colorExtra1"
         android:fontFamily="@font/font_octninesecond"/>
 
