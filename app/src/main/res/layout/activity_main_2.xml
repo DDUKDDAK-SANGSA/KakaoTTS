@@ -34,7 +34,6 @@
 
         </LinearLayout>
 
-
         <com.github.angads25.toggle.widget.LabeledSwitch
             android:id="@+id/onoffswitch"
             android:layout_width="match_parent"

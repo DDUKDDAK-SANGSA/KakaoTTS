@@ -8,13 +8,17 @@ import android.text.TextUtils
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
+import com.github.angads25.toggle.interfaces.OnToggledListener
+import com.github.angads25.toggle.model.ToggleableView
 import kotlinx.android.synthetic.main.activity_main_2.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnToggledListener{
     var initalStatus: Boolean = false
     val NETWORK_STATE_CODE = 0
 
@@ -28,6 +32,8 @@ class MainActivity : AppCompatActivity() {
             var intent: Intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
             startActivity(intent)
         }
+
+        onoffswitch.setOnToggledListener(this)
 
         expandable.parentLayout.setOnClickListener {
             if (expandable.isExpanded) {
@@ -72,6 +78,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSwitched(toggleableView: ToggleableView, isOn:Boolean){
+        if(isOn){
+            Toast.makeText(this@MainActivity, "On", Toast.LENGTH_LONG).show()
+        } else{
+            Toast.makeText(this@MainActivity, "Off", Toast.LENGTH_LONG).show()
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
