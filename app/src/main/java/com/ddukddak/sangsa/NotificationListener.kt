@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 
 @SuppressLint("OverrideAbstract")
 class NotificationListener : NotificationListenerService() {
@@ -14,9 +17,13 @@ class NotificationListener : NotificationListenerService() {
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
         super.onNotificationRemoved(sbn)
-
         Log.d(TAG, "onNotificationRemoved " + " packageName: " + sbn.packageName + " id: " + sbn.id)
 
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.i("NotificationListener", "onStartCommand()");
+        return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -24,24 +31,26 @@ class NotificationListener : NotificationListenerService() {
 
         var notification: Notification = sbn.notification
         var extras: Bundle = sbn.notification.extras
-        var title: String? = extras.getString(Notification.EXTRA_TITLE)
-        var text: CharSequence? = extras.getCharSequence(Notification.EXTRA_TEXT)
-        var subText: CharSequence? = extras.getCharSequence(Notification.EXTRA_SUB_TEXT)
+        var title: String? = extras.getString(Notification.EXTRA_TITLE) // 발신자
+        var text: CharSequence? = extras.getCharSequence(Notification.EXTRA_TEXT) // 텍스트 내용
 
-        var msgrcv: Intent = Intent("Msg")
+        var st:Timestamp = Timestamp(sbn.postTime);
+        var sdf: SimpleDateFormat = SimpleDateFormat("MM월 dd일 E요일 a hh시 mm분", Locale.KOREA );
+        var time = sdf.format(st) // 발신 시간
+
+
+       var msgrcv: Intent = Intent("Msg")
 
         msgrcv.putExtra("appName", sbn.packageName)
         msgrcv.putExtra("title", title)
         msgrcv.putExtra("text", text)
-        msgrcv.putExtra("subText", subText)
+        msgrcv.putExtra("time", time)
 
         Log.d(TAG, "onNotificationPosted " +
                 " packageName: " + sbn.packageName +
-                " id: " + sbn.id +
-                " postTime: " + sbn.postTime +
+                " real time: " + time +
                 " title " + title +
-                " text " + text +
-                " subText " + subText)
+                " text " + text)
 
         sendBroadcast(msgrcv)
     }

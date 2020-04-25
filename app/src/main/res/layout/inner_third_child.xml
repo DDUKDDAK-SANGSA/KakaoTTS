@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/titleOptionTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -23,7 +23,7 @@
             android:textSize="40dp" />
 
         <Switch
-            android:id="@+id/useFunction"
+            android:id="@+id/titleOptionSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="130dp"
@@ -38,7 +38,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/timeOptionTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -49,7 +49,7 @@
             android:textSize="40dp" />
 
         <Switch
-            android:id="@+id/useFunction"
+            android:id="@+id/timeOptionSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
@@ -64,7 +64,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/currentStatusTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -75,7 +75,7 @@
             android:textSize="40dp" />
 
         <Switch
-            android:id="@+id/useFunction"
+            android:id="@+id/currentStatusSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
