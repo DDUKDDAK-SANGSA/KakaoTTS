@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="130dp"
             android:layout_marginTop="42dp"
+            android:switchMinWidth="85dp"
             android:thumb="@drawable/switch_thumb"
             android:track="@drawable/switch_track_selector" />
     </LinearLayout>
@@ -54,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="42dp"
+            android:switchMinWidth="85dp"
             android:thumb="@drawable/switch_thumb"
             android:track="@drawable/switch_track_selector" />
     </LinearLayout>
@@ -80,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="42dp"
+            android:switchMinWidth="85dp"
             android:thumb="@drawable/switch_thumb"
             android:track="@drawable/switch_track_selector" />
     </LinearLayout>
