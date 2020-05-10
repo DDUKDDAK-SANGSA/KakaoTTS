@@ -29,7 +29,9 @@
             android:layout_marginLeft="60dp"
             android:layout_marginTop="50dp"
             android:thumb="@drawable/switch_thumb"
+            android:checked="true"
             android:track="@drawable/switch_track_selector" />
+
     </LinearLayout>
 
         <LinearLayout

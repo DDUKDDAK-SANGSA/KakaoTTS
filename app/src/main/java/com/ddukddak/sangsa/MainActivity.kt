@@ -1,20 +1,89 @@
 package com.ddukddak.sangsa
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.transition.AutoTransition
 import android.transition.TransitionManager
+import android.util.Log
 import android.view.View
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main_2.*
 
+
 class MainActivity : AppCompatActivity() {
+
     var initalStatus: Boolean = false
     val NETWORK_STATE_CODE = 0
 
+    val TAG = "MAIN"
+
+    private val REQUEST_ENABLE_BT = 2
+    private val REQUEST_CONNECT_DEVICE =1
+    private val REQUEST_ENALBE_BT =2
+
+    private var btn_Connect: Switch? = null
+    private var bluetoothService_obj: BluetoothService? = null
+
+    private val mHandler: Handler = object : Handler() {
+        override fun handleMessage(msg: Message?) {
+            super.handleMessage(msg)
+        }
+    }
+
+    private var mClickListener: View.OnClickListener? = View.OnClickListener { v ->
+        //분기.
+        when (v.id) {
+            R.id.useFunction -> if (bluetoothService_obj!!.deviceState) // 블루투스 기기의 지원여부가 true 일때
+            {
+                bluetoothService_obj!!.enableBluetooth() //블루투스 활성화 시작.
+            } else {
+                finish()
+            }
+            else -> {
+            }
+        }
+    }
+
+    /*블루투스 접속에 따른 결과를 처리하는 메소드 이다.*/
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+
+    {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d(TAG, "onActivityResult$resultCode")
+        // TODO Auto-generated method stub
+
+        if(resultCode ==REQUEST_ENABLE_BT){
+            if(resultCode ==Activity.RESULT_OK){
+                bluetoothService_obj?.scanDevice();
+            }
+            else{
+                Log.d(TAG, "Bluetooth is not enable")
+            }
+        }
+        if(resultCode==REQUEST_CONNECT_DEVICE){
+            if(resultCode==Activity.RESULT_OK){
+
+                //bluetoothService_obj.getDeviceinfo(data);
+
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?){
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_2)
 
+        btn_Connect = findViewById(R.id.useFunction) as Switch
+        btn_Connect!!.setOnClickListener(mClickListener)
+
+        if (bluetoothService_obj == null) {
+            bluetoothService_obj = BluetoothService(this, mHandler)
+        }
         expandable.parentLayout.setOnClickListener {
             if (expandable.isExpanded) {
                 TransitionManager.beginDelayedTransition(expandable1, AutoTransition())
@@ -59,7 +128,9 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    /*
+
+
+   /*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
