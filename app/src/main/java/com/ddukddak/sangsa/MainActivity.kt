@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*블루투스 접속에 따른 결과를 처리하는 메소드 이다.*/
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
     {
         super.onActivityResult(requestCode, resultCode, data)
