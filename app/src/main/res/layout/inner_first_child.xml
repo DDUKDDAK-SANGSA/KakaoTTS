@@ -30,7 +30,9 @@
             android:layout_marginTop="42dp"
             android:switchMinWidth="85dp"
             android:thumb="@drawable/switch_thumb"
+            android:checked="true"
             android:track="@drawable/switch_track_selector" />
+
     </LinearLayout>
     <View style="@style/Divider" />
     <LinearLayout

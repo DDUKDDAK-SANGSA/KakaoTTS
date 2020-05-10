@@ -56,7 +56,7 @@
             android:textSize="100sp"
             app:colorBorder="@color/colorExtra1"
             app:colorOn="@color/colorExtra1"
-            app:on="false" />
+            app:on="true" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -115,6 +115,14 @@
                 app:expandable_spinner_size="40dp" />
 
             <View style="@style/Divider" />
+
+            <Button
+                android:id="@+id/finishBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="종료"
+                android:textSize="30dp"
+                android:fontFamily="@font/font_kopubmedium"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

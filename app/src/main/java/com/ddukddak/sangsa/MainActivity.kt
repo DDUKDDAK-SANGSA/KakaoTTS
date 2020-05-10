@@ -1,39 +1,19 @@
 package com.ddukddak.sangsa
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationManagerCompat
-import com.github.angads25.toggle.interfaces.OnToggledListener
-import com.github.angads25.toggle.model.ToggleableView
 import kotlinx.android.synthetic.main.activity_main_2.*
 
-
-class MainActivity : AppCompatActivity(), OnToggledListener{
+class MainActivity : AppCompatActivity() {
     var initalStatus: Boolean = false
     val NETWORK_STATE_CODE = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_2)
-
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), NETWORK_STATE_CODE)
-
-        if (!permissionGranted()) {
-            var intent: Intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
-            startActivity(intent)
-        }
-
-        onoffswitch.setOnToggledListener(this)
 
         expandable.parentLayout.setOnClickListener {
             if (expandable.isExpanded) {
@@ -76,21 +56,72 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
                 expandable2.expand()
             }
         }
+
+
+    }
+    /*
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        Log.e("hash key",getSigneture(this));
+
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), NETWORK_STATE_CODE)
+
+        if (!permissionGranted()) {
+            var intent: Intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
+            startActivity(intent)
+        }
+
+        showText.movementMethod = ScrollingMovementMethod() //스크롤바 달기
+
+        val adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.speed,
+                android.R.layout.simple_spinner_item
+        ) // 안 변하니까 val 선언함
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        speed.adapter = adapter
+
+        speed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                if (!initalStatus) {
+                    initalStatus= !initalStatus
+                    return
+                }  // 어플 최초 실행시 자동으로 선택된 스피너에 대한 알림 주지 않기 위해서
+
+                when (position) {
+                    0 -> {
+                        Toast.makeText(this@MainActivity, "You have chosen number 1", Toast.LENGTH_LONG).show()
+                    }
+                    1 -> {
+                        Toast.makeText(this@MainActivity, "You have chosen number 2", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
+        registerReceiver(notificationReceiver, IntentFilter("Msg"))
     }
 
-    override fun onSwitched(toggleableView: ToggleableView, isOn:Boolean){
-        if(isOn){
-            Toast.makeText(this@MainActivity, "On", Toast.LENGTH_LONG).show()
-        } else{
-            Toast.makeText(this@MainActivity, "Off", Toast.LENGTH_LONG).show()
+    /*
+    override fun onPause() {
+        super.onPause()
+        try {
+            unregisterReceiver(notificationReceiver)
+        }
+        catch(i : IllegalArgumentException) {
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(notificationReceiver)
-    }
-
+    }*/
     val notificationReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
@@ -100,12 +131,18 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             var subText = intent.getStringExtra("subText") // 단톡방 이름
 
             var fullText: String = appName + title + text + subText
-            // showText.append(fullText + "\n")
+            showText.append(fullText + "\n")
 
-            if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
+            if(!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
                 val BWFIntent = Intent(context, BadwordFilter::class.java)
                 BWFIntent.putExtra("TextToFilter", text)
                 startService(BWFIntent)
+                /*
+                val TTSIntent = Intent(context, TextToSpeech::class.java)
+                TTSIntent.putExtra("TextForSpeech", text)
+                startService(TTSIntent)
+
+                 */
             }
         }
     }
@@ -115,48 +152,29 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         return sets != null && sets.contains(packageName)
     }
 
-}
-
-
-/*
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
-
-    //Log.e("hash key",getSignature(this));
-
-    showText.movementMethod = ScrollingMovementMethod() //스크롤바 달기
-
-    val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.speed,
-            android.R.layout.simple_spinner_item
-    ) // 안 변하니까 val 선언함
-
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    speed.adapter = adapter
-
-    speed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-        override fun onNothingSelected(p0: AdapterView<*>?) {}
-
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-            if (!initalStatus) {
-                initalStatus= !initalStatus
-                return
-            }  // 어플 최초 실행시 자동으로 선택된 스피너에 대한 알림 주지 않기 위해서
-
-            when (position) {
-                0 -> {
-                    Toast.makeText(this@MainActivity, "You have chosen number 1", Toast.LENGTH_LONG).show()
-                }
-                1 -> {
-                    Toast.makeText(this@MainActivity, "You have chosen number 2", Toast.LENGTH_LONG).show()
+    //to get hash key
+    fun getSigneture(context: Context): String? {
+        val pm: PackageManager = context.getPackageManager()
+        try {
+            val packageInfo: PackageInfo =
+                pm.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES)
+            for (i in packageInfo.signatures.indices) {
+                val signature: android.content.pm.Signature? = packageInfo.signatures[i]
+                try {
+                    val md: MessageDigest = MessageDigest.getInstance("SHA")
+                    if (signature != null) {
+                        md.update(signature.toByteArray())
+                    }
+                    return Base64.encodeToString(md.digest(), Base64.NO_WRAP)
+                } catch (e: NoSuchAlgorithmException) {
+                    e.printStackTrace()
                 }
             }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
         }
+        return null
     }
-    registerReceiver(notificationReceiver, IntentFilter("Msg"))
+    */
+
 }
- */
