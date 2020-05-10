@@ -1,101 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:clipChildren="false">
-
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/colorAccent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:background="@color/colorAccent"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:fontFamily="@font/font_impact"
-            android:textColor="#201D1D"
-            android:text="Hear Here"
-            android:textSize="40sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="37dp"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher_foreground" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:fontFamily="@font/font_impact"
+                android:text="Hear Here"
+                android:textColor="#201D1D"
+                android:textSize="40sp" />
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="37dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_launcher_foreground" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|right|top"
+                android:paddingRight="@dimen/com_kakao_padding"
+                android:paddingTop="@dimen/com_kakao_padding">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="102dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/kakao_lg"/>
+            </LinearLayout>
 
 
-    <com.github.angads25.toggle.widget.LabeledSwitch
+        </LinearLayout>
+
+        <com.github.angads25.toggle.widget.LabeledSwitch
             android:id="@+id/onoffswitch"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_margin="20dp"
             android:textSize="100sp"
+            app:colorBorder="@color/colorExtra1"
             app:colorOn="@color/colorExtra1"
-            app:on="false"
-            app:colorBorder="@color/colorExtra1"/>
-</LinearLayout>
+            app:on="true" />
+    </LinearLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/ScrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#ffffff">
-    <View style="@style/Divider"/>
+        android:layout_height="wrap_content">
 
-        <com.skydoves.expandablelayout.ExpandableLayout
-            android:id="@+id/expandable"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:expandable_animation="bounce"
-            app:expandable_duration="300"
-            app:expandable_isExpanded="false"
-            app:expandable_parentLayout="@layout/inner_first_parent"
-            app:expandable_secondLayout="@layout/inner_first_child"
-            app:expandable_spinner_color="@color/colorPrimaryDark"
-            app:expandable_spinner_size="50dp"
-            app:expandable_spinner="@drawable/ic_expand_more"/>
-        <View style="@style/Divider"/>
-    <com.skydoves.expandablelayout.ExpandableLayout
-        android:id="@+id/expandable1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:expandable_animation="bounce"
-        app:expandable_duration="200"
-        app:expandable_isExpanded="false"
-        app:expandable_parentLayout="@layout/inner_second_parent"
-        app:expandable_secondLayout="@layout/inner_second_child"
-        app:expandable_spinner_color="@color/colorPrimaryDark"
-        app:expandable_spinner_size="50dp"
-        app:expandable_spinner="@drawable/ic_expand_more"/>
-    <View style="@style/Divider"/>
-    <com.skydoves.expandablelayout.ExpandableLayout
-        android:id="@+id/expandable2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:expandable_duration="200"
-        app:expandable_isExpanded="false"
-        app:expandable_parentLayout="@layout/inner_third_parent"
-        app:expandable_secondLayout="@layout/inner_third_child"
-        app:expandable_spinner_color="@color/colorPrimaryDark"
-        app:expandable_spinner_size="50dp"
-        app:expandable_spinner="@drawable/ic_expand_more"/>
-    <View style="@style/Divider"/>
+            android:background="#ffffff"
+            android:orientation="vertical">
 
-</LinearLayout>
+            <View style="@style/Divider" />
+
+            <com.skydoves.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:expandable_animation="bounce"
+                app:expandable_duration="300"
+                app:expandable_isExpanded="false"
+                app:expandable_parentLayout="@layout/inner_first_parent"
+                app:expandable_secondLayout="@layout/inner_first_child"
+                app:expandable_spinner="@drawable/ic_expand_more"
+                app:expandable_spinner_color="@color/colorPrimaryDark"
+                app:expandable_spinner_size="40dp" />
+
+            <View style="@style/Divider" />
+
+            <com.skydoves.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:expandable_animation="bounce"
+                app:expandable_duration="200"
+                app:expandable_isExpanded="false"
+                app:expandable_parentLayout="@layout/inner_second_parent"
+                app:expandable_secondLayout="@layout/inner_second_child"
+                app:expandable_spinner="@drawable/ic_expand_more"
+                app:expandable_spinner_color="@color/colorPrimaryDark"
+                app:expandable_spinner_size="40dp" />
+
+            <View style="@style/Divider" />
+
+            <com.skydoves.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:expandable_duration="200"
+                app:expandable_isExpanded="false"
+                app:expandable_parentLayout="@layout/inner_third_parent"
+                app:expandable_secondLayout="@layout/inner_third_child"
+                app:expandable_spinner="@drawable/ic_expand_more"
+                app:expandable_spinner_color="@color/colorPrimaryDark"
+                app:expandable_spinner_size="40dp" />
+
+            <View style="@style/Divider" />
+
+            <Button
+                android:id="@+id/finishBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="종료"
+                android:textSize="30dp"
+                android:fontFamily="@font/font_kopubmedium"/>
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

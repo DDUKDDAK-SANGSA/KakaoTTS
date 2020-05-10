@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_cover"
+    android:id="@+id/inner_second_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
+    android:padding="10dp"
     tools:ignore="UnusedAttribute">
 
     <TextView
+        android:id="@+id/inner_second_text"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
@@ -15,7 +16,7 @@
         android:layout_alignParentLeft="true"
         android:text="사운드 설정"
         android:layout_marginLeft="10dp"
-        android:textSize="45sp"
+        android:textSize="40dp"
         android:textColor="@color/colorExtra1"
         android:fontFamily="@font/font_octninesecond"/>
 
