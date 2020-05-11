@@ -26,11 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ddukddak.sangsa.DeviceListActivity"
+        <activity android:name=".DeviceListActivity"
             android:theme="@android:style/Theme.DeviceDefault.Dialog">
-
         </activity>
         <activity android:name=".MainActivity"> </activity>
+
         <service
             android:name=".NotificationListener"
             android:label="Notification Listener"
@@ -55,9 +55,5 @@
             android:value="@string/kakao_app_key" />
     </application>
     <uses-permission android:name="android.permission.BLUETOOTH" />
-
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-
-
 </manifest>
