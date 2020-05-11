@@ -116,14 +116,6 @@
 
             <View style="@style/Divider" />
 
-            <Button
-                android:id="@+id/finishBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="종료"
-                android:textSize="30dp"
-                android:fontFamily="@font/font_kopubmedium"/>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

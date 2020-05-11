@@ -1,13 +1,18 @@
 package com.ddukddak.sangsa
 
+import android.R
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.IBinder
 import android.util.Log
+import android.widget.CompoundButton
+import android.widget.Switch
 import androidx.core.content.ContextCompat
-import com.kakao.sdk.newtoneapi.*
-
+import com.kakao.sdk.newtoneapi.SpeechRecognizerManager
+import com.kakao.sdk.newtoneapi.TextToSpeechClient
+import com.kakao.sdk.newtoneapi.TextToSpeechListener
+import com.kakao.sdk.newtoneapi.TextToSpeechManager
 
 class TextToSpeech : Service() {
     val TAG = "Kakao"
@@ -61,6 +66,8 @@ class TextToSpeech : Service() {
                     })
                     .build()
             }
+
+
 
             val text = intent?.getStringExtra("TextForSpeech")
             Log.d(TAG, text)

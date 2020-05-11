@@ -75,7 +75,7 @@
             android:textSize="40dp" />
 
         <Switch
-            android:id="@+id/useFunction"
+            android:id="@+id/alertNoti"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"

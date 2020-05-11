@@ -9,6 +9,9 @@ import android.graphics.Color
 import android.graphics.Color.DKGRAY
 import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
+import android.media.Ringtone
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -31,17 +34,20 @@ import kotlinx.android.synthetic.main.inner_third_parent.*
 
 
 class MainActivity : AppCompatActivity(), OnToggledListener{
+    private val TAG = "MAIN"
     var initalStatus: Boolean = false
     val NETWORK_STATE_CODE = 0
+
     lateinit var spinner: Spinner
     val speedList = arrayOf<String>("0.5","1.0","2.0")
     var textSpeed : Double = 1.0
-    private val TAG = "MAIN"
+    lateinit var alertSwitch : Switch
+
     private val REQUEST_CONNECT_DEVICE = 1
     private val REQUEST_ENABLE_BT = 2
     var mainIsOn : Boolean = true
-    private lateinit var btn_Connect: Switch
 
+    private lateinit var btn_Connect: Switch
     private var bluetoothService_obj: BluetoothService? = null
 
     private val mHandler: Handler = object : Handler() {
@@ -56,14 +62,6 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         setContentView(R.layout.activity_main_2)
 
         Log.e(TAG, "onCreate")
-        btn_Connect = findViewById(R.id.useFunction)
-        btn_Connect.setOnClickListener(mClickListener)
-
-        if (bluetoothService_obj == null)
-        {
-            bluetoothService_obj =  BluetoothService(this, mHandler)
-        }
-
 
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), NETWORK_STATE_CODE)
 
@@ -155,6 +153,25 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
                 Toast.makeText(this@MainActivity, "Progress is " + seekBar.progress + "%", Toast.LENGTH_SHORT).show()
             }
         })
+
+        //alertSwitch
+        alertSwitch = findViewById(R.id.alertNoti)
+        alertSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked) {
+                val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                val r1 : Ringtone = RingtoneManager.getRingtone(this, notification)
+                r1.play()
+            }
+        })
+
+        //bluetooth
+        btn_Connect = findViewById(R.id.useFunction)
+        btn_Connect.setOnClickListener(mClickListener)
+
+        if (bluetoothService_obj == null)
+        {
+            bluetoothService_obj =  BluetoothService(this, mHandler)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
