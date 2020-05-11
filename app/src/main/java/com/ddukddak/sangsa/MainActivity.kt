@@ -98,15 +98,6 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         textVolume = findViewById<SeekBar>(R.id.volume)
         textVolume.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
 
-        /*
-textVolume?.setOnSeekBarChangeListener (object : OnSeekBarChangeListener {
-override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0)
-}
-
-override fun onStartTrackingTouch(seekBar: SeekBar) {}
-override fun onStopTrackingTouch(seekBar: SeekBar) {}
-})*/
         textVolume?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, i: Int, fromUser: Boolean) {
                 // Write code to perform some action when progress is changed.
