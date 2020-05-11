@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     private val REQUEST_CONNECT_DEVICE = 1
     private val REQUEST_ENABLE_BT = 2
 
-    private lateinit var btn_Connect: SwitchCompat
+    private lateinit var btn_Connect: Switch
 
     private var bluetoothService_obj: BluetoothService? = null
 
@@ -47,17 +47,6 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_2)
-
-        Log.e(TAG, "onCreate")
-        setContentView(R.layout.inner_first_child);
-        btn_Connect = findViewById(R.id.useFunction)
-        btn_Connect.setOnClickListener(mClickListener)
-
-        if (bluetoothService_obj == null)
-        {
-            bluetoothService_obj =  BluetoothService(this, mHandler)
-        }
-
 
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), NETWORK_STATE_CODE)
 
@@ -142,6 +131,15 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
                 Toast.makeText(this@MainActivity, "Progress is " + seekBar.progress + "%", Toast.LENGTH_SHORT).show()
             }
         })
+
+        //bluetooth
+        btn_Connect = findViewById(R.id.useFunction)
+        btn_Connect.setOnClickListener(mClickListener)
+
+        if (bluetoothService_obj == null)
+        {
+            bluetoothService_obj =  BluetoothService(this, mHandler)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
