@@ -1,17 +1,21 @@
 package com.ddukddak.sangsa
 
+import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.text.TextUtils
 import android.transition.AutoTransition
 import android.transition.TransitionManager
+import android.util.Log
 import android.view.View
 import android.widget.*
-import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import com.github.angads25.toggle.interfaces.OnToggledListener
@@ -25,10 +29,35 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     lateinit var spinner: Spinner
     val speedList = arrayOf<String>("0.5","1.0","2.0")
     var textSpeed : Double = 1.0
+    private val TAG = "MAIN"
+    private val REQUEST_CONNECT_DEVICE = 1
+    private val REQUEST_ENABLE_BT = 2
+
+    private lateinit var btn_Connect: SwitchCompat
+
+    private var bluetoothService_obj: BluetoothService? = null
+
+    private val mHandler: Handler = object : Handler() {
+        override fun handleMessage(msg: Message?) {
+            super.handleMessage(msg)
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_2)
+
+        Log.e(TAG, "onCreate")
+        setContentView(R.layout.inner_first_child);
+        btn_Connect = findViewById(R.id.useFunction)
+        btn_Connect.setOnClickListener(mClickListener)
+
+        if (bluetoothService_obj == null)
+        {
+            bluetoothService_obj =  BluetoothService(this, mHandler)
+        }
+
 
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), NETWORK_STATE_CODE)
 
@@ -114,6 +143,42 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             }
         })
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d(BluetoothService.TAG, "onActivityResult$resultCode")
+        when (requestCode) {
+            BluetoothService.REQUEST_ENABLE_BT -> //When the request to enable Bluetooth returns
+                if (resultCode == Activity.RESULT_OK) //취소를 눌렀을 때
+                {
+                    bluetoothService_obj?.scanDevice();
+                }
+                else{
+                    Log.d(TAG, "Bluetooth is not enable")
+                }
+            BluetoothService.REQUEST_CONNEXT_DEVICE ->
+                if(resultCode ==Activity.RESULT_OK){
+                    //bluetoothService_obj.getDeviceinfo(data)
+                }
+        }
+
+    }
+
+    private val mClickListener =
+        View.OnClickListener { v ->
+            //분기.
+            when (v.id) {
+                R.id.useFunction -> if (bluetoothService_obj!!.deviceState) // 블루투스 기기의 지원여부가 true 일때
+                {
+                    bluetoothService_obj!!.enableBluetooth() //블루투스 활성화 시작.
+                } else {
+                    finish()
+                }
+                else -> {
+                }
+            }
+        }
+
 
     override fun onSwitched(toggleableView: ToggleableView, isOn:Boolean){
         if(isOn){
