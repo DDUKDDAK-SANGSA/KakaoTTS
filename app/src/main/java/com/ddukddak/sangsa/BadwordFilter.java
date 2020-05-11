@@ -24,6 +24,7 @@ public class BadwordFilter extends Service {
     @Nullable
     String TAG = "BadwordFilter";
     List<String> list = new ArrayList<String>();
+    double textSpeed = 1;
 
     @Override
     public void onStart(Intent intent, int id) {
@@ -32,6 +33,7 @@ public class BadwordFilter extends Service {
         readData();
         Log.d(TAG, "text : " + intent.getStringExtra("TextToFilter"));
         filterBadWords(intent.getStringExtra("TextToFilter"));
+        textSpeed = intent.getDoubleExtra("Speed", 1.0);
     }
 
     private void readData() {
@@ -91,7 +93,7 @@ public class BadwordFilter extends Service {
         j = 0;
         while(j != strSplit.length) {
             text += strSplit[j] + " ";
-                //text.concat(strSplit[j]);
+            //text.concat(strSplit[j]);
             j++;
         }
         //      Log.d("filtered list", list.get(i));
@@ -101,6 +103,7 @@ public class BadwordFilter extends Service {
         Log.d(TAG, "filtered text : " + text);
         Intent TTSIntent = new Intent(this, TextToSpeech.class);
         TTSIntent.putExtra("TextForSpeech", text);
+        TTSIntent.putExtra("Speed", textSpeed);
         startService(TTSIntent);
     }
 
@@ -109,3 +112,4 @@ public class BadwordFilter extends Service {
         return null;
     }
 }
+

@@ -15,7 +15,7 @@ class TextToSpeech : Service() {
 
     override fun onStart(intent: Intent?, startId: Int) {
         super.onStart(intent, startId)
-        Log.d(TAG, "onStart")
+        //Log.d(TAG, "onStart")
         startSpeech(intent)
     }
 
@@ -35,28 +35,32 @@ class TextToSpeech : Service() {
             SpeechRecognizerManager.getInstance().initializeLibrary(this)
             TextToSpeechManager.getInstance().initializeLibrary(this)
 
+            val speed = intent?.getDoubleExtra("Speed", 1.0)
+
             //TTS 클라이언트 생성
-            ttsClient = TextToSpeechClient.Builder()
-                .setSpeechMode(TextToSpeechClient.NEWTONE_TALK_1)     // 음성합성방식
-                .setSpeechSpeed(1.0)            // 발음 속도(0.5~4.0)
-                .setSpeechVoice(TextToSpeechClient.VOICE_WOMAN_READ_CALM)  //TTS 음색 모드 설정(여성 차분한 낭독체)
-                .setListener(object : TextToSpeechListener {
-                    //아래 두개의 메소드만 구현해 주면 된다. 음성합성이 종료될 때 호출된다.
-                    override fun onFinished() {
-                        val intSentSize = ttsClient?.getSentDataSize()      //세션 중에 전송한 데이터 사이즈
-                        val intRecvSize = ttsClient?.getReceivedDataSize()  //세션 중에 전송받은 데이터 사이즈
+            if (speed != null) {
+                ttsClient = TextToSpeechClient.Builder()
+                    .setSpeechMode(TextToSpeechClient.NEWTONE_TALK_1)     // 음성합성방식
+                    .setSpeechSpeed(speed)            // 발음 속도(0.5~4.0)
+                    .setSpeechVoice(TextToSpeechClient.VOICE_WOMAN_READ_CALM)  //TTS 음색 모드 설정(여성 차분한 낭독체)
+                    .setListener(object : TextToSpeechListener {
+                        //아래 두개의 메소드만 구현해 주면 된다. 음성합성이 종료될 때 호출된다.
+                        override fun onFinished() {
+                            val intSentSize = ttsClient?.getSentDataSize()      //세션 중에 전송한 데이터 사이즈
+                            val intRecvSize = ttsClient?.getReceivedDataSize()  //세션 중에 전송받은 데이터 사이즈
 
-                        val strInacctiveText =
-                            "handleFinished() SentSize : $intSentSize  RecvSize : $intRecvSize"
+                            val strInacctiveText =
+                                "handleFinished() SentSize : $intSentSize  RecvSize : $intRecvSize"
 
-                        Log.i(TAG, strInacctiveText)
-                    }
+                            Log.i(TAG, strInacctiveText)
+                        }
 
-                    override fun onError(code: Int, message: String?) {
-                        Log.d(TAG, code.toString())
-                    }
-                })
-                .build()
+                        override fun onError(code: Int, message: String?) {
+                            Log.d(TAG, code.toString())
+                        }
+                    })
+                    .build()
+            }
 
             val text = intent?.getStringExtra("TextForSpeech")
             Log.d(TAG, text)
