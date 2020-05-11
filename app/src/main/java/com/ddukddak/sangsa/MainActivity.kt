@@ -259,10 +259,12 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             // showText.append(fullText + "\n")
 
             if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
-                val BWFIntent = Intent(context, BadwordFilter::class.java)
-                BWFIntent.putExtra("TextToFilter", text)
-                BWFIntent.putExtra("Speed", textSpeed)
-                startService(BWFIntent)
+                if (mainIsOn){
+                    val BWFIntent = Intent(context, BadwordFilter::class.java)
+                    BWFIntent.putExtra("TextToFilter", text)
+                    BWFIntent.putExtra("Speed", textSpeed)
+                    startService(BWFIntent)
+                }
             }
         }
     }
