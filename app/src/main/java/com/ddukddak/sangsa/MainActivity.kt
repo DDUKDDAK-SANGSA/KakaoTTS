@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_2)
@@ -136,8 +135,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         btn_Connect = findViewById(R.id.useFunction)
         btn_Connect.setOnClickListener(mClickListener)
 
-        if (bluetoothService_obj == null)
-        {
+        if (bluetoothService_obj == null) {
             bluetoothService_obj =  BluetoothService(this, mHandler)
         }
     }
