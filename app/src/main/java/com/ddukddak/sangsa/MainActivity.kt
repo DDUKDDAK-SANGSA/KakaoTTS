@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     private val REQUEST_CONNECT_DEVICE = 1
     private val REQUEST_ENABLE_BT = 2
 
-    private lateinit var btn_Connect: SwitchCompat
+    private lateinit var btn_Connect: Switch
 
     private var bluetoothService_obj: BluetoothService? = null
 
@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         setContentView(R.layout.activity_main_2)
 
         Log.e(TAG, "onCreate")
-        setContentView(R.layout.inner_first_child);
         btn_Connect = findViewById(R.id.useFunction)
         btn_Connect.setOnClickListener(mClickListener)
 
