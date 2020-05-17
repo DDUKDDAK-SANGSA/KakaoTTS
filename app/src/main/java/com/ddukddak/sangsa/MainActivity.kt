@@ -6,8 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Color.DKGRAY
-import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
 import android.media.Ringtone
 import android.media.RingtoneManager
@@ -22,7 +20,6 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import com.github.angads25.toggle.interfaces.OnToggledListener
@@ -38,6 +35,9 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     var initalStatus: Boolean = false
     val NETWORK_STATE_CODE = 0
 
+    val D = true
+
+    val MESSAGE_STATE_CHANGE = 1
     lateinit var spinner: Spinner
     val speedList = arrayOf<String>("0.5","1.0","2.0")
     var textSpeed : Double = 1.0
@@ -50,10 +50,12 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     private lateinit var btn_Connect: Switch
     private var bluetoothService_obj: BluetoothService? = null
 
-    private val mHandler: Handler = object : Handler() {
+    private val mHandler: Handler = @SuppressLint("HandlerLeak")
+    object : Handler() {
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
         }
+
     }
 
 
@@ -188,7 +190,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
                 }
             BluetoothService.REQUEST_CONNEXT_DEVICE ->
                 if(resultCode ==Activity.RESULT_OK){
-                    //bluetoothService_obj.getDeviceinfo(data)
+                    bluetoothService_obj?.getDeviceinfo(data)
                 }
         }
 
@@ -303,6 +305,11 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
     fun onNothingSelected(arg0: AdapterView<*>?) {
         // TODO Auto-generated method stub
+    }
+
+    companion object {
+        @kotlin.jvm.JvmField
+        var MESSAGE_STATE_CHANGE: Int = 1
     }
 
 }
