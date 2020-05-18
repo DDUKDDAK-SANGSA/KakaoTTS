@@ -24,7 +24,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import com.github.angads25.toggle.interfaces.OnToggledListener
 import com.github.angads25.toggle.model.ToggleableView
-import kotlinx.android.synthetic.main.activity_main_2.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.inner_first_parent.*
 import kotlinx.android.synthetic.main.inner_second_parent.*
 import kotlinx.android.synthetic.main.inner_third_parent.*
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_2)
+        setContentView(R.layout.activity_main)
 
         Log.e(TAG, "onCreate")
 
