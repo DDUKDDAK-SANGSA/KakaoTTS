@@ -294,7 +294,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
                 if (mainIsOn){
                     val BWFIntent = Intent(context, BadwordFilter::class.java)
-                    BWFIntent.putExtra("TextToFilter", text)
+                    BWFIntent.putExtra("TextToFilter", fullText)
                     BWFIntent.putExtra("Speed", textSpeed)
                     startService(BWFIntent)
                 }
