@@ -139,10 +139,23 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         spinner = findViewById(R.id.speed)
         spinner.onItemSelectedListener
 
+
         val adapter: ArrayAdapter<*> =
             ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, speedList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.setAdapter(adapter)
+
+        spinner.setSelection(1)
+
+        spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent:AdapterView<*>, view: View, position: Int, id: Long){
+                textSpeed = speedList[position].toDouble()
+                //Toast.makeText(this, speedList[position], Toast.LENGTH_LONG).show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>){
+            }
+        }
 
         registerReceiver(notificationReceiver, IntentFilter("Msg"))
         //volume
@@ -151,21 +164,21 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
         var textVolume = findViewById<SeekBar>(R.id.volume)
         textVolume = findViewById<SeekBar>(R.id.volume)
-        textVolume.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
+        textVolume.setProgress(50);
+        //textVolume.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
 
         textVolume?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, i: Int, fromUser: Boolean) {
-                // Write code to perform some action when progress is changed.
+                Log.d("seekbar i : ", i.toString())
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                // Write code to perform some action when touch is started.
+                //audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 5, 0)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                // Write code to perform some action when touch is stopped.
-                Toast.makeText(this@MainActivity, "Progress is " + seekBar.progress + "%", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@MainActivity, "Progress is " + seekBar.progress + "%", Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -291,6 +304,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
             var fullText: String ="${if (titleOption) title else ""} ${if (timeOption) time else ""} $text"
 
+            Log.d("Speed in Main : ", textSpeed.toString())
             if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
                 if (mainIsOn){
                     val BWFIntent = Intent(context, BadwordFilter::class.java)
@@ -307,24 +321,12 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         return sets != null && sets.contains(packageName)
     }
 
-    fun onItemSelected(
-        arg0: AdapterView<*>?,
-        arg1: View?,
-        position: Int,
-        id: Long
-    ) {
-        textSpeed = Integer.valueOf(speedList[position]).toDouble()
-        //Toast.makeText(this, speedList[position], Toast.LENGTH_LONG).show()
-    }
-
-    fun onNothingSelected(arg0: AdapterView<*>?) {
-        // TODO Auto-generated method stub
-    }
-
     companion object {
         @kotlin.jvm.JvmField
         var MESSAGE_STATE_CHANGE: Int = 1
     }
+
+
 
 }
 

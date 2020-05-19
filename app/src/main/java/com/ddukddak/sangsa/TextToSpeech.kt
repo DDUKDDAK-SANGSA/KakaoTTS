@@ -67,8 +67,6 @@ class TextToSpeech : Service() {
                     .build()
             }
 
-
-
             val text = intent?.getStringExtra("TextForSpeech")
             Log.d(TAG, text)
             ttsClient?.play(text)
