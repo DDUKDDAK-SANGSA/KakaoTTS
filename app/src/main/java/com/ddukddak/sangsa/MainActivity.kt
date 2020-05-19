@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.media.AudioManager
 import android.media.Ringtone
@@ -132,6 +133,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.setAdapter(adapter)
 
+        registerReceiver(notificationReceiver, IntentFilter("Msg"))
         //volume
         var audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
         //getSystemService(Context.AUDIO_SERVICE)
@@ -230,12 +232,13 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             inner_third_text.setTextColor(Color.rgb(106, 150, 31))
 
             mainIsOn = true
+            print(mainIsOn)
         } else{
             Toast.makeText(this@MainActivity, "기능을 비활성화합니다.", Toast.LENGTH_LONG).show()
 
             TransitionManager.beginDelayedTransition(expandable, AutoTransition())
             TransitionManager.beginDelayedTransition(expandable1, AutoTransition())
-            TransitionManager.beginDelayedTransition(expandable1, AutoTransition())
+            TransitionManager.beginDelayedTransition(expandable2, AutoTransition())
 
             expandable.visibility = View.VISIBLE
             expandable1.visibility = View.VISIBLE
@@ -245,7 +248,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             expandable1.collapse()
             expandable2.collapse()
 
-            //expandable.is
+            expandable.isEnabled=false
             expandable1.isEnabled=false
             expandable2.isEnabled=false
 
@@ -258,6 +261,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             inner_third_text.setTextColor(Color.DKGRAY)
 
             mainIsOn = false
+            print(mainIsOn)
         }
     }
 
@@ -275,6 +279,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             var subText = intent.getStringExtra("subText") // 단톡방 이름
 
             var fullText: String = appName + title + text + subText
+            print(fullText)
             // showText.append(fullText + "\n")
 
             if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
