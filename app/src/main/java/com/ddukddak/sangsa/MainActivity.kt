@@ -28,6 +28,7 @@ import com.github.angads25.toggle.model.ToggleableView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.inner_first_parent.*
 import kotlinx.android.synthetic.main.inner_second_parent.*
+import kotlinx.android.synthetic.main.inner_third_child.*
 import kotlinx.android.synthetic.main.inner_third_parent.*
 
 
@@ -50,6 +51,12 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
     private lateinit var btn_Connect: Switch
     private var bluetoothService_obj: BluetoothService? = null
+
+    var mainFunctionOption: Boolean = true // 메인 기능
+
+    var timeOption: Boolean = false // 발신 시간
+    var titleOption: Boolean = false // 발신자
+    var currentStatusOption: Boolean = false // 현재 상태
 
     private val mHandler: Handler = @SuppressLint("HandlerLeak")
     object : Handler() {
@@ -123,6 +130,11 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             }
 
         }
+
+        // 3.  텍스트 내용 설정 기능
+        titleOptionSwitch.setOnCheckedChangeListener { _, isChecked -> titleOption = isChecked }
+        timeOptionSwitch.setOnCheckedChangeListener { _, isChecked -> timeOption = isChecked }
+        currentStatusSwitch.setOnCheckedChangeListener { _, isChecked -> currentStatusOption = isChecked }
 
         //spinner
         spinner = findViewById(R.id.speed)
@@ -273,14 +285,12 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     val notificationReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            var appName = intent.getStringExtra("appName") // 앱 이름
-            var title = intent.getStringExtra("title") // 발신자
-            var text = intent.getStringExtra("text") // 카톡 내용
-            var subText = intent.getStringExtra("subText") // 단톡방 이름
+            var appName: String? = intent.getStringExtra("appName") // 앱 이름
+            var title: String? = "발신자 " + intent.getStringExtra("title") // 발신자
+            var text: String? = intent.getStringExtra("text") // 카톡 내용
+            var time = "발신 시간 " + intent.getStringExtra("time") // 발신 시간
 
-            var fullText: String = appName + title + text + subText
-            print(fullText)
-            // showText.append(fullText + "\n")
+            var fullText: String ="$appName ${if (titleOption) title else ""} ${if (timeOption) time else ""} $text"
 
             if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
                 if (mainIsOn){
