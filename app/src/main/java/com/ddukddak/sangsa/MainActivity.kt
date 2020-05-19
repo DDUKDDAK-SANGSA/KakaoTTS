@@ -134,7 +134,6 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         // 3.  텍스트 내용 설정 기능
         titleOptionSwitch.setOnCheckedChangeListener { _, isChecked -> titleOption = isChecked }
         timeOptionSwitch.setOnCheckedChangeListener { _, isChecked -> timeOption = isChecked }
-        currentStatusSwitch.setOnCheckedChangeListener { _, isChecked -> currentStatusOption = isChecked }
 
         //spinner
         spinner = findViewById(R.id.speed)
