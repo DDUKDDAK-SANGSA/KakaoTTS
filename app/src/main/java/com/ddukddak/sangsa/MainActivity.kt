@@ -289,7 +289,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             var text: String? = intent.getStringExtra("text") // 카톡 내용
             var time = "발신 시간 " + intent.getStringExtra("time") // 발신 시간
 
-            var fullText: String ="$appName ${if (titleOption) title else ""} ${if (timeOption) time else ""} $text"
+            var fullText: String ="${if (titleOption) title else ""} ${if (timeOption) time else ""} $text"
 
             if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
                 if (mainIsOn){
