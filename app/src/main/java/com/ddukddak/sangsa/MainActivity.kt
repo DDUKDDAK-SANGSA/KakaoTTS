@@ -310,6 +310,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             Log.d("Speed in Main : ", textSpeed.toString())
             if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
                 if (mainIsOn){
+                    Log.d(TAG, "text : " + text)
                     if(vibIsOn) {
                         val vib : Vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                         vib.vibrate(1000)
