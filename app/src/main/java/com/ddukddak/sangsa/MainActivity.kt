@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.os.Vibrator
 import android.text.TextUtils
 import android.transition.AutoTransition
 import android.transition.TransitionManager
@@ -44,6 +45,9 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     val speedList = arrayOf<String>("0.5","1.0","2.0")
     var textSpeed : Double = 1.0
     lateinit var alertSwitch : Switch
+    var alertIsOn : Boolean = false
+    lateinit var vibSwitch: Switch
+    var vibIsOn : Boolean = false
 
     private val REQUEST_CONNECT_DEVICE = 1
     private val REQUEST_ENABLE_BT = 2
@@ -186,9 +190,23 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         alertSwitch = findViewById(R.id.alertNoti)
         alertSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked) {
-                val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-                val r1 : Ringtone = RingtoneManager.getRingtone(this, notification)
-                r1.play()
+                alertIsOn = true
+            }
+            else {
+                alertIsOn = false
+            }
+            Log.d(TAG, "switch : " + alertIsOn.toString())
+        })
+
+        //vibSwitch
+        //alertSwitch
+        vibSwitch = findViewById(R.id.vibNoti)
+        vibSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked) {
+                vibIsOn = true
+            }
+            else {
+                vibIsOn = false
             }
         })
 
@@ -307,6 +325,15 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             Log.d("Speed in Main : ", textSpeed.toString())
             if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
                 if (mainIsOn){
+                    if(alertIsOn) {
+                        val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                        val ringtone : Ringtone = RingtoneManager.getRingtone(applicationContext, notification)
+                        ringtone.play()
+                    }
+                    if(vibIsOn) {
+                        val vib : Vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                        vib.vibrate(1000)
+                    }
                     val BWFIntent = Intent(context, BadwordFilter::class.java)
                     BWFIntent.putExtra("TextToFilter", fullText)
                     BWFIntent.putExtra("Speed", textSpeed)
