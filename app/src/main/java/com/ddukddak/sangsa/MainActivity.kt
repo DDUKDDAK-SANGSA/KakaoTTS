@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     lateinit var spinner: Spinner
     val speedList = arrayOf<String>("0.5","1.0","2.0")
     var textSpeed : Double = 1.0
-    lateinit var alertSwitch : Switch
-    var alertIsOn : Boolean = false
     lateinit var vibSwitch: Switch
     var vibIsOn : Boolean = false
 
@@ -186,20 +184,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             }
         })
 
-        //alertSwitch
-        alertSwitch = findViewById(R.id.alertNoti)
-        alertSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked) {
-                alertIsOn = true
-            }
-            else {
-                alertIsOn = false
-            }
-            Log.d(TAG, "switch : " + alertIsOn.toString())
-        })
-
         //vibSwitch
-        //alertSwitch
         vibSwitch = findViewById(R.id.vibNoti)
         vibSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked) {
@@ -325,11 +310,6 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             Log.d("Speed in Main : ", textSpeed.toString())
             if (!TextUtils.isEmpty(text) && TextUtils.equals("com.kakao.talk", appName)) {
                 if (mainIsOn){
-                    if(alertIsOn) {
-                        val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-                        val ringtone : Ringtone = RingtoneManager.getRingtone(applicationContext, notification)
-                        ringtone.play()
-                    }
                     if(vibIsOn) {
                         val vib : Vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                         vib.vibrate(1000)
