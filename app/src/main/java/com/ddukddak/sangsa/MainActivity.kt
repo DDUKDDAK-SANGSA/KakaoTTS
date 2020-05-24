@@ -54,11 +54,8 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     private lateinit var btn_Connect: Switch
     private var bluetoothService_obj: BluetoothService? = null
 
-    var mainFunctionOption: Boolean = true // 메인 기능
-
     var timeOption: Boolean = false // 발신 시간
     var titleOption: Boolean = false // 발신자
-    var currentStatusOption: Boolean = false // 현재 상태
 
     private val mHandler: Handler = @SuppressLint("HandlerLeak")
     object : Handler() {
@@ -74,6 +71,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         setContentView(R.layout.activity_main)
 
         Log.e(TAG, "onCreate")
+
 
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), NETWORK_STATE_CODE)
 
@@ -133,9 +131,24 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
         }
 
-        // 3.  텍스트 내용 설정 기능
-        titleOptionSwitch.setOnCheckedChangeListener { _, isChecked -> titleOption = isChecked }
-        timeOptionSwitch.setOnCheckedChangeListener { _, isChecked -> timeOption = isChecked }
+        // 기존 저장된 설정값 불러오기
+        timeOption = MyApplication.prefs.timeOption.toBoolean()
+        titleOption = MyApplication.prefs.titleOption.toBoolean()
+
+        timeOptionSwitch.isChecked = timeOption
+        titleOptionSwitch.isChecked= titleOption
+
+        // 발신자 설정
+        titleOptionSwitch.setOnCheckedChangeListener { _, isChecked ->
+            MyApplication.prefs.titleOption = isChecked.toString()
+            titleOption = MyApplication.prefs.titleOption.toBoolean()
+        }
+
+        // 발신시간 설정
+        timeOptionSwitch.setOnCheckedChangeListener { _, isChecked ->
+            MyApplication.prefs.timeOption = isChecked.toString()
+            timeOption = MyApplication.prefs.timeOption.toBoolean()
+        }
 
         //spinner
         spinner = findViewById(R.id.speed)
@@ -337,47 +350,3 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
 
 }
-
-
-/*
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
-
-    //Log.e("hash key",getSignature(this));
-
-    showText.movementMethod = ScrollingMovementMethod() //스크롤바 달기
-
-    val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.speed,
-            android.R.layout.simple_spinner_item
-    ) // 안 변하니까 val 선언함
-
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    speed.adapter = adapter
-
-    speed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-        override fun onNothingSelected(p0: AdapterView<*>?) {}
-
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-            if (!initalStatus) {
-                initalStatus= !initalStatus
-                return
-            }  // 어플 최초 실행시 자동으로 선택된 스피너에 대한 알림 주지 않기 위해서
-
-            when (position) {
-                0 -> {
-                    Toast.makeText(this@MainActivity, "You have chosen number 1", Toast.LENGTH_LONG).show()
-                }
-                1 -> {
-                    Toast.makeText(this@MainActivity, "You have chosen number 2", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
-    registerReceiver(notificationReceiver, IntentFilter("Msg"))
-}
- */
