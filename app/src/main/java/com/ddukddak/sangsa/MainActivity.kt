@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
     val D = true
 
-    val MESSAGE_STATE_CHANGE = 1
     lateinit var spinner: Spinner
     val speedList = arrayOf<String>("0.5","1.0","2.0")
     var textSpeed : Double = 1.0
@@ -61,6 +60,32 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     object : Handler() {
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
+            if (msg != null) {
+                when (msg.what) {
+                    MESSAGE_STATE_CHANGE -> {
+                        if (D) Log.i(BluetoothService.TAG, "MESSAGE_STATE_CHANGE:" + msg.arg1)
+                        when (msg.arg1) {
+                            BluetoothService.STATE_CONNECTED -> {
+                                Toast.makeText(
+                                    getApplicationContext(),
+                                    "블루투스 연결에 성공하였습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Toast.makeText(
+                                    getApplicationContext(),
+                                    "블루투스 연결에 실패하였습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            BluetoothService.STATE_FAIL -> Toast.makeText(
+                                getApplicationContext(),
+                                "블루투스 연결에 실패하였습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
         }
 
     }
