@@ -1,6 +1,5 @@
 package com.ddukddak.sangsa;
 
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -8,8 +7,6 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +29,7 @@ public class BluetoothService {
     private ConnectedThread mConnectedThread;
 
     public static final int REQUEST_ENABLE_BT = 2;
-    public static final int REQUEST_CONNEXT_DEVICE = 1;
+    public static final int REQUEST_CONNECT_DEVICE = 1;
 
     public static final String TAG = "BluetoothService";
 
@@ -91,7 +88,7 @@ public class BluetoothService {
         Log.d(TAG, "Scan Device");
 
         Intent serverIntent = new Intent(mActivity, DeviceListActivity.class);
-        mActivity.startActivityForResult(serverIntent, REQUEST_CONNEXT_DEVICE);
+        mActivity.startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     }
     private synchronized void setState(int state){
         Log.d(TAG, "setState()"+ mState+ "->"+state);

@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     private val mHandler: Handler = @SuppressLint("HandlerLeak")
     object : Handler() {
         override fun handleMessage(msg: Message?) {
+            var status = findViewById(R.id.status) as TextView
             super.handleMessage(msg)
             if (msg != null) {
                 when (msg.what) {
@@ -71,17 +72,14 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
                                     "블루투스 연결에 성공하였습니다.",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                Toast.makeText(
-                                    getApplicationContext(),
-                                    "블루투스 연결에 실패하였습니다.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
-                            BluetoothService.STATE_FAIL -> Toast.makeText(
+                            BluetoothService.STATE_FAIL -> {
+                                Toast.makeText(
                                 getApplicationContext(),
                                 "블루투스 연결에 실패하였습니다.",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            }
                         }
                     }
                 }
@@ -255,7 +253,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
                 else{
                     Log.d(TAG, "Bluetooth is not enable")
                 }
-            BluetoothService.REQUEST_CONNEXT_DEVICE ->
+            BluetoothService.REQUEST_CONNECT_DEVICE ->
                 if(resultCode ==Activity.RESULT_OK){
                     bluetoothService_obj?.getDeviceinfo(data)
                 }
