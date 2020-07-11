@@ -201,6 +201,9 @@ public class BluetoothService {
 
             try{
                 tmp = createBluetoothSocket(mmDevice);
+                // 원래는 device.createRfcommSocketToServiceRecord(MY_UUID); 로 썼는데
+                // 에러 찾다보니까 저렇게 쓰고 맨 밑에 따로 함수 지정해서 한 경우에 해결됐다고 해서 따라했는데
+                // 우리꺼는 안돼요 썅 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
             }
             catch(IOException e){
                 Log.e(TAG, "create() failed", e);
