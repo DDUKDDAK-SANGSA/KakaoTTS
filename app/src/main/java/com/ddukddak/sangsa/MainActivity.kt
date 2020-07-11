@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.inner_first_parent.*
 import kotlinx.android.synthetic.main.inner_second_parent.*
 import kotlinx.android.synthetic.main.inner_third_child.*
 import kotlinx.android.synthetic.main.inner_third_parent.*
+import kotlinx.android.synthetic.main.inner_first_child.*
 
 
 class MainActivity : AppCompatActivity(), OnToggledListener{
@@ -46,11 +47,14 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     lateinit var vibSwitch: Switch
     var vibIsOn : Boolean = false
 
+    // intent request code
     private val REQUEST_CONNECT_DEVICE = 1
     private val REQUEST_ENABLE_BT = 2
     var mainIsOn : Boolean = true
 
     private lateinit var btn_Connect: Switch
+
+    // bluetoothService 클래스 객체
     private var bluetoothService_obj: BluetoothService? = null
 
     var timeOption: Boolean = false // 발신 시간
@@ -60,13 +64,14 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     object : Handler() {
         override fun handleMessage(msg: Message?) {
             var status = findViewById(R.id.status) as TextView
-            super.handleMessage(msg)
+            super.handleMessage(msg) // BluetoothService 로부터 메시지 msg 받기
             if (msg != null) {
                 when (msg.what) {
                     MESSAGE_STATE_CHANGE -> {
                         if (D) Log.i(BluetoothService.TAG, "MESSAGE_STATE_CHANGE:" + msg.arg1)
                         when (msg.arg1) {
                             BluetoothService.STATE_CONNECTED -> {
+                                System.out.println("핸들러 메시지:"+msg.arg1+"     "+msg.arg2)
                                 Toast.makeText(
                                     getApplicationContext(),
                                     "블루투스 연결에 성공하였습니다.",
@@ -74,6 +79,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
                                 ).show()
                             }
                             BluetoothService.STATE_FAIL -> {
+                                System.out.println("핸들러 메시지:"+msg.arg1+"     "+msg.arg2)
                                 Toast.makeText(
                                 getApplicationContext(),
                                 "블루투스 연결에 실패하였습니다.",
@@ -195,7 +201,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             }
         }
 
-        registerReceiver(notificationReceiver, IntentFilter("Msg"))
+        //registerReceiver(notificationReceiver, IntentFilter("Msg"))
         //volume
         var audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
         //getSystemService(Context.AUDIO_SERVICE)
@@ -232,12 +238,25 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         })
 
         //bluetooth
-        btn_Connect = findViewById(R.id.useFunction)
-        btn_Connect.setOnClickListener(mClickListener)
+        btn_Connect = findViewById(R.id.bluetooth_connect)
+        btn_Connect.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked) {
+                if (bluetoothService_obj!!.deviceState) {
+                    bluetoothService_obj!!.enableBluetooth() //블루투스 활성화 시작
+                } else {
+                    Toast.makeText(this@MainActivity, "블루투스를 지원하지 않는 기기입니다.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            } else{
+            if (bluetoothService_obj!!.deviceState){
+                bluetoothService_obj!!.stop();
+                }
+            }
+        }
 
         if (bluetoothService_obj == null)
         {
-            bluetoothService_obj =  BluetoothService(this, mHandler)
+            bluetoothService_obj = BluetoothService(this, mHandler)
         }
     }
 
@@ -255,26 +274,14 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
                 }
             BluetoothService.REQUEST_CONNECT_DEVICE ->
                 if(resultCode ==Activity.RESULT_OK){
-                    bluetoothService_obj?.getDeviceinfo(data)
+                    bluetoothService_obj?.getDeviceInfo(data)
                 }
         }
 
     }
 
-    private val mClickListener =
-        View.OnClickListener { v ->
-            //분기.
-            when (v.id) {
-                R.id.useFunction -> if (bluetoothService_obj!!.deviceState) // 블루투스 기기의 지원여부가 true 일때
-                {
-                    bluetoothService_obj!!.enableBluetooth() //블루투스 활성화 시작.
-                } else {
-                    finish()
-                }
-                else -> {
-                }
-            }
-        }
+
+
 
 
     @SuppressLint("ResourceAsColor")
@@ -330,7 +337,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(notificationReceiver)
+        //unregisterReceiver(notificationReceiver)
     }
 
     val notificationReceiver = object : BroadcastReceiver() {
