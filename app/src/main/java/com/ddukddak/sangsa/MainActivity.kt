@@ -8,9 +8,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.media.AudioManager
-import android.media.Ringtone
-import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -31,7 +28,6 @@ import kotlinx.android.synthetic.main.inner_first_parent.*
 import kotlinx.android.synthetic.main.inner_second_parent.*
 import kotlinx.android.synthetic.main.inner_third_child.*
 import kotlinx.android.synthetic.main.inner_third_parent.*
-import kotlinx.android.synthetic.main.inner_first_child.*
 
 
 class MainActivity : AppCompatActivity(), OnToggledListener{
@@ -60,10 +56,12 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
     var timeOption: Boolean = false // 발신 시간
     var titleOption: Boolean = false // 발신자
 
+    private lateinit var deviceNameTv: TextView
+
     private val mHandler: Handler = @SuppressLint("HandlerLeak")
     object : Handler() {
         override fun handleMessage(msg: Message?) {
-            var status = findViewById(R.id.status) as TextView
+            var status = findViewById(R.id.connectedDevice) as TextView
             super.handleMessage(msg) // BluetoothService 로부터 메시지 msg 받기
             if (msg != null) {
                 when (msg.what) {
@@ -201,7 +199,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             }
         }
 
-        //registerReceiver(notificationReceiver, IntentFilter("Msg"))
+        registerReceiver(notificationReceiver, IntentFilter("Msg"))
         //volume
         var audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
         //getSystemService(Context.AUDIO_SERVICE)
@@ -258,6 +256,11 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
         {
             bluetoothService_obj = BluetoothService(this, mHandler)
         }
+        deviceNameTv = findViewById(R.id.connectedDevice)
+        //var deviceIntent : Intent = Intent.getIntent()
+        //if (deviceIntent != null) {
+            //deviceNameTv.setText(deviceIntent.getStringExtra("deviceName"))
+        //}
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -275,6 +278,9 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
             BluetoothService.REQUEST_CONNECT_DEVICE ->
                 if(resultCode ==Activity.RESULT_OK){
                     bluetoothService_obj?.getDeviceInfo(data)
+                    if (data != null) {
+                        deviceNameTv.setText(data.getStringExtra("device"))
+                    };
                 }
         }
 
@@ -337,7 +343,7 @@ class MainActivity : AppCompatActivity(), OnToggledListener{
 
     override fun onDestroy() {
         super.onDestroy()
-        //unregisterReceiver(notificationReceiver)
+        unregisterReceiver(notificationReceiver)
     }
 
     val notificationReceiver = object : BroadcastReceiver() {

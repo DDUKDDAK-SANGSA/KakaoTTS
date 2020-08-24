@@ -20,7 +20,7 @@ class TextToSpeech : Service() {
 
     override fun onStart(intent: Intent?, startId: Int) {
         super.onStart(intent, startId)
-        //Log.d(TAG, "onStart")
+        Log.d(TAG, "onStart")
         startSpeech(intent)
     }
 

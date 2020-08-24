@@ -6,8 +6,13 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +22,6 @@ import java.util.UUID;
 import java.util.logging.LogRecord;
 
 public class BluetoothService {
-
 
     public static final int STATE_NONE=1;
     public static final int STATE_LISTEN=2;
@@ -32,6 +36,7 @@ public class BluetoothService {
 
     public static final int REQUEST_ENABLE_BT = 2;
     public static final int REQUEST_CONNECT_DEVICE = 1;
+    public static final int CONNECTED_DEVICE = 3;
 
     public static final String TAG = "BluetoothService";
 
@@ -41,6 +46,8 @@ public class BluetoothService {
     private BluetoothAdapter btAdapter;
     private Activity mActivity;
     private Handler mHandler;
+
+    public String deviceName;
 
     // 블루투스 서비스 생성자
     public BluetoothService(Activity activity, Handler handler) {
@@ -118,6 +125,12 @@ public class BluetoothService {
         System.out.println("address: "+ address);
         BluetoothDevice device = btAdapter.getRemoteDevice(address);
         System.out.println("device:"+ device);
+        System.out.println("device name : " + device.getName());
+
+        //Intent intent =new Intent(mActivity, MainActivity.class);
+        //intent.putExtra("deviceName", device.getName());
+        //mActivity.startActivity(intent);
+        deviceName = device.getName();
 
         Log.d(TAG, "Get Device Info \n" + "address : "+address);
 
@@ -201,9 +214,7 @@ public class BluetoothService {
 
             try{
                 tmp = createBluetoothSocket(mmDevice);
-                // 원래는 device.createRfcommSocketToServiceRecord(MY_UUID); 로 썼는데
-                // 에러 찾다보니까 저렇게 쓰고 맨 밑에 따로 함수 지정해서 한 경우에 해결됐다고 해서 따라했는데
-                // 우리꺼는 안돼요 썅 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+                //device.createRfcommSocketToServiceRecord(MY_UUID);
             }
             catch(IOException e){
                 Log.e(TAG, "create() failed", e);
